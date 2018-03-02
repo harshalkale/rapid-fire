@@ -1,0 +1,28 @@
+<div class="row justify-content-center">
+  <!-- <div class="col-lg-3"></div> -->
+  <div class="col-lg-6">
+    <form (ngSubmit)="play()">
+      <div class="form-row">
+        <div class="col-md-10">
+          <div class="form-group">
+            <label for="player-name">Please enter your name to play</label>
+            <input type="text" name="playerName" id="player-name" class="form-control" placeholder="Name" aria-describedby="player-name-help"
+              [(ngModel)]="player.name" required #playerName="ngModel">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn btn-block btn-primary">
+              Play
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-danger text-center" role="alert" [hidden]="playerName.valid || playerName.pristine">
+        <strong>Please enter a valid Name</strong>
+      </div>
+    </form>
+  </div>
+  <!-- <div class="col-lg-3"></div> -->
+</div>
