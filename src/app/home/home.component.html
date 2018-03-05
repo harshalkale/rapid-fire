@@ -1,25 +1,24 @@
 <div class="row justify-content-center">
   <!-- <div class="col-lg-3"></div> -->
   <div class="col-lg-6">
-    <form (ngSubmit)="play()">
+    <form [formGroup]="playerForm" (ngSubmit)="play()">
       <div class="form-row">
         <div class="col-md-10">
           <div class="form-group">
             <label for="player-name">Please enter your name to play</label>
-            <input type="text" name="playerName" id="player-name" class="form-control" placeholder="Name" aria-describedby="player-name-help"
-              [(ngModel)]="player.name" required #playerName="ngModel">
+            <input type="text" formControlName="name" class="form-control">
           </div>
         </div>
         <div class="col-md-2">
           <div class="form-group">
             <label>&nbsp;</label>
-            <button type="submit" class="btn btn-block btn-primary">
+            <button type="submit" class="btn btn-block btn-primary" [disabled]="!playerForm.valid || playerForm.pristine">
               Play
             </button>
           </div>
         </div>
       </div>
-      <div class="alert alert-danger text-center" role="alert" [hidden]="playerName.valid || playerName.pristine">
+      <div class="alert alert-danger text-center" role="alert" [hidden]="playerForm.valid || playerForm.pristine">
         <strong>Please enter a valid Name</strong>
       </div>
     </form>

@@ -13,8 +13,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let score of scores; index as i">
-          <td scope="row">{{ (i + 1) }}</td>
+        <tr *ngFor="let score of scoreboard">
+          <td scope="row">{{ score.id }}</td>
           <td>{{ score.name }}</td>
           <td>{{ score.score }}</td>
         </tr>

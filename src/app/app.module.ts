@@ -1,10 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 import { EvaluatorService } from './evaluator/evaluator.service';
+import { QuestionService } from './question/question.service';
+import { ScoreboardService } from './scoreboard/scoreboard.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -25,10 +28,11 @@ import { ScoreboardComponent } from './scoreboard/scoreboard.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    AppRoutingModule
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [EvaluatorService],
+  providers: [EvaluatorService, QuestionService, ScoreboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 export class Question {
-    number: number;
+    id: number;
     question: string;
     options: Option[];
     correctOption: Option;

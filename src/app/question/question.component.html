@@ -3,8 +3,8 @@
     <h4 class="card-title">{{question.question}}</h4>
     <div class="card-text">
       <div class="form-check form-check-inline" *ngFor="let option of question.options">
-        <input class="form-check-input" type="radio" name="question{{question.number}}option" id="question{{question.number}}option{{option.number}}" value="{{option.number}}" (click)="evaluateAnswer(option.number)">
-        <label class="form-check-label" for="question{{question.number}}option{{option.number}}">{{option.answer}}</label>
+        <input class="form-check-input" type="radio" name="question{{question.id}}option" id="question{{question.id}}option{{option.number}}" value="{{option.number}}" (click)="evaluateAnswer(option.number)">
+        <label class="form-check-label" for="question{{question.id}}option{{option.number}}">{{option.answer}}</label>
       </div>
     </div>
   </div>

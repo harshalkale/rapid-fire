@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Player } from '../player/player';
-import { Quiz } from './quiz';
 import { Question } from '../question/question';
 import { EvaluatorService } from '../evaluator/evaluator.service';
 import { TimerComponent } from '../timer/timer.component';
@@ -15,23 +14,26 @@ import { TimerComponent } from '../timer/timer.component';
 export class QuizComponent implements OnInit {
 
   player: Player;
-  questions: Question[];
+
+  private _questions: Question[];
 
   @ViewChild(TimerComponent)
 
   private timer: TimerComponent;
 
-  constructor(private router: Router, private route: ActivatedRoute, private evaluatorService: EvaluatorService) {
-    this.evaluatorService.player.name = this.route.snapshot.paramMap.get('name');
-    this.evaluatorService.questions = new Quiz().getQuestions;
-  }
+  get questions(): Question[] { return this.evaluatorService.questions; }
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private evaluatorService: EvaluatorService) { }
 
   ngOnInit() {
+    this.evaluatorService.player.name = this.route.snapshot.paramMap.get('name');
     this.player = this.evaluatorService.player;
     if (!this.player.name) {
       this.router.navigate(['/home']);
     }
-    this.questions = this.evaluatorService.questions;
     this.timer.timeout = this.evaluatorService.timeout;
     this.timer.interval = 0;
   }
@@ -43,8 +45,9 @@ export class QuizComponent implements OnInit {
 
   evaluate() {
     this.timer.clearTimer();
-    this.evaluatorService.evaluate(this.timer.timeout);
-    this.router.navigate(['/scoreboard']);
+    this.evaluatorService.evaluate(this.timer.timeout, () => {
+      this.router.navigate(['/scoreboard']);
+    });
   }
 
 }
