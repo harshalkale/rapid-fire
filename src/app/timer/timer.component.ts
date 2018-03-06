@@ -5,7 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.css']
 })
-export class TimerComponent implements OnInit, OnDestroy {
+export class TimerComponent implements OnDestroy {
 
   private _interval: number;
   private _timeout: number;
@@ -25,7 +25,6 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   clearTimer() { clearInterval(this._interval); }
 
-  ngOnInit() { this.start(); }
   ngOnDestroy() { this.clearTimer(); }
 
   start() { this.countDown(); }

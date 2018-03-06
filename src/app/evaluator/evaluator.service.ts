@@ -16,13 +16,7 @@ export class EvaluatorService {
   questions: Question[];
   timeout = TIMEOUT;
 
-  constructor(private questionService: QuestionService, private scoreboardService: ScoreboardService) {
-    this.getQuestions();
-  }
-
-  getQuestions(): void {
-    this.questionService.getQuestions().subscribe(questions => this.questions = questions);
-  }
+  constructor(private questionService: QuestionService, private scoreboardService: ScoreboardService) { }
 
   evaluate(timeout: number, callback: Function) {
     timeout = timeout === 0 ? 1 : timeout;
@@ -47,20 +41,20 @@ export class EvaluatorService {
       newScoreboard = newScoreboard.slice(0, 5);
 
       if (newScoreboard.length === 1) {
-        this.scoreboardService.addScoreboard(newScoreboard[0]).subscribe(score => console.log('score saved', score));
+        this.scoreboardService.addScoreboard(newScoreboard[0]).subscribe(score => {
+          callback();
+        });
       } else {
         const parallelDeleteOps: Observable<Score>[] = [];
         currentScoreboard.forEach((score) => {
           parallelDeleteOps.push(this.scoreboardService.deleteScoreboard(score));
         });
         forkJoin(parallelDeleteOps).subscribe(deleteResults => {
-          console.log(deleteResults);
           const parallelAddOps: Observable<Score>[] = [];
           newScoreboard.forEach((score) => {
             parallelAddOps.push(this.scoreboardService.addScoreboard(score));
           });
           forkJoin(parallelAddOps).subscribe(addResults => {
-            console.log(addResults);
             callback();
           });
         });

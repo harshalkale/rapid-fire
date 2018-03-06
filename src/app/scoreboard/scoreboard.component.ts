@@ -14,7 +14,10 @@ export class ScoreboardComponent implements OnInit {
   constructor(private scoreboardService: ScoreboardService) { }
 
   ngOnInit() {
-    this.scoreboardService.getScoreboard().subscribe(scoreboard => this.scoreboard = scoreboard);
+    this.scoreboardService.getScoreboard().subscribe(scoreboard => {
+      scoreboard.sort((a, b) => a.id - b.id);
+      this.scoreboard = scoreboard;
+    });
   }
 
 }

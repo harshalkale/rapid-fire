@@ -4,6 +4,7 @@ import { Player } from '../player/player';
 import { Question } from '../question/question';
 import { EvaluatorService } from '../evaluator/evaluator.service';
 import { TimerComponent } from '../timer/timer.component';
+import { QuestionService } from '../question/question.service';
 
 @Component({
   selector: 'app-quiz',
@@ -15,18 +16,17 @@ export class QuizComponent implements OnInit {
 
   player: Player;
 
-  private _questions: Question[];
+  questions: Question[];
 
   @ViewChild(TimerComponent)
 
   private timer: TimerComponent;
 
-  get questions(): Question[] { return this.evaluatorService.questions; }
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private evaluatorService: EvaluatorService) { }
+    private evaluatorService: EvaluatorService,
+    private questionService: QuestionService) { }
 
   ngOnInit() {
     this.evaluatorService.player.name = this.route.snapshot.paramMap.get('name');
@@ -36,6 +36,10 @@ export class QuizComponent implements OnInit {
     }
     this.timer.timeout = this.evaluatorService.timeout;
     this.timer.interval = 0;
+    this.questionService.getQuestions().subscribe(questions => {
+      this.questions = this.evaluatorService.questions = questions;
+      this.timer.start();
+    });
   }
 
   timerCompleteEvent($event) {
